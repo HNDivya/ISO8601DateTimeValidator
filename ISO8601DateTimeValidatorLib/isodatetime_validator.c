@@ -111,6 +111,8 @@ static bool is_valid_date(const char* datetime_str)
     return true;
 }
 
+
+// function to check the valid time range [0-23]
 static bool is_valid_time(const char* datetime_str)
 {
     int hour = atoi(datetime_str + 11);
@@ -143,6 +145,41 @@ static bool is_valid_time_offset(const char* datetime_str)
     return true;
 }
 
+// This function only check format- YYYY-MM-DD
+// TODO: extend to include other supported date format as per ISO8601
+// YYYYMMDD
+// ±YYYYYYDDD
+// ±YYYYYY-DDD
+// YYYYWww
+// YYYY-Www 
+static bool is_valid_date_format(const char* datetime_str)
+{
+    if (!is_valid_digit(datetime_str, 0, 3) || // Year
+        !is_valid_digit(datetime_str, 5, 6) || // Month
+        !is_valid_digit(datetime_str, 8, 9)) { // Day
+        return false;
+    }
+    return true;
+}
+
+// This function only checks format- hh:mm:ss
+// TODO: below are the list of other time format supported in ISO8601
+// hhmmss
+// hhmm,mZ
+// hh:mm,mZ
+// hhmm±hhmm
+// hh:mm±hh:mm
+// consider adding logic for other time formats as well.
+static bool is_valid_time_format(const char* datetime_str)
+{
+    if (!is_valid_digit(datetime_str, 11, 12) || // Hour
+        !is_valid_digit(datetime_str, 14, 15) || // Minute
+        !is_valid_digit(datetime_str, 17, 18)) { // Second
+        return false;
+    }
+    return true;
+}
+
 // Function to validate the extended format of date-time string in ISO 8601.
 bool is_valid_iso8601_datetime(const char* datetime_str) {
     if (strlen(datetime_str) < 20 || strlen(datetime_str) > 25) {
@@ -153,12 +190,9 @@ bool is_valid_iso8601_datetime(const char* datetime_str) {
         return false;
     }
 
-    if (!is_valid_digit(datetime_str, 0, 3) || // Year
-        !is_valid_digit(datetime_str, 5, 6) || // Month
-        !is_valid_digit(datetime_str, 8, 9) || // Day
-        !is_valid_digit(datetime_str, 11, 12) || // Hour
-        !is_valid_digit(datetime_str, 14, 15) || // Minute
-        !is_valid_digit(datetime_str, 17, 18)) { // Second
+    
+    if (!is_valid_date_format(datetime_str)
+        || !is_valid_time_format(datetime_str)) {
         return false;
     }
 
