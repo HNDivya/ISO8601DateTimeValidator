@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ISO8601DateTimeValidator", "ISO8601DateTimeValidator.vcxproj", "{0D581CAD-F9B9-44A0-BDE3-09345EFEA334}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ISO8601DateTimeValidatorLib", "..\ISO8601DateTimeValidatorLib\ISO8601DateTimeValidatorLib.vcxproj", "{331AC583-6F22-40AD-811D-67BC3C892302}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IS08601DateTimeValidatorTest", "..\IS08601DateTimeValidatorTest\IS08601DateTimeValidatorTest.vcxproj", "{78A10F54-E72D-49BC-8270-1A7FD65C4B23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D581CAD-F9B9-44A0-BDE3-09345EFEA334}.Debug|x64.ActiveCfg = Debug|x64
+		{0D581CAD-F9B9-44A0-BDE3-09345EFEA334}.Debug|x64.Build.0 = Debug|x64
+		{0D581CAD-F9B9-44A0-BDE3-09345EFEA334}.Debug|x86.ActiveCfg = Debug|Win32
+		{0D581CAD-F9B9-44A0-BDE3-09345EFEA334}.Debug|x86.Build.0 = Debug|Win32
+		{0D581CAD-F9B9-44A0-BDE3-09345EFEA334}.Release|x64.ActiveCfg = Release|x64
+		{0D581CAD-F9B9-44A0-BDE3-09345EFEA334}.Release|x64.Build.0 = Release|x64
+		{0D581CAD-F9B9-44A0-BDE3-09345EFEA334}.Release|x86.ActiveCfg = Release|Win32
+		{0D581CAD-F9B9-44A0-BDE3-09345EFEA334}.Release|x86.Build.0 = Release|Win32
+		{331AC583-6F22-40AD-811D-67BC3C892302}.Debug|x64.ActiveCfg = Debug|x64
+		{331AC583-6F22-40AD-811D-67BC3C892302}.Debug|x64.Build.0 = Debug|x64
+		{331AC583-6F22-40AD-811D-67BC3C892302}.Debug|x86.ActiveCfg = Debug|Win32
+		{331AC583-6F22-40AD-811D-67BC3C892302}.Debug|x86.Build.0 = Debug|Win32
+		{331AC583-6F22-40AD-811D-67BC3C892302}.Release|x64.ActiveCfg = Release|x64
+		{331AC583-6F22-40AD-811D-67BC3C892302}.Release|x64.Build.0 = Release|x64
+		{331AC583-6F22-40AD-811D-67BC3C892302}.Release|x86.ActiveCfg = Release|Win32
+		{331AC583-6F22-40AD-811D-67BC3C892302}.Release|x86.Build.0 = Release|Win32
+		{78A10F54-E72D-49BC-8270-1A7FD65C4B23}.Debug|x64.ActiveCfg = Debug|x64
+		{78A10F54-E72D-49BC-8270-1A7FD65C4B23}.Debug|x64.Build.0 = Debug|x64
+		{78A10F54-E72D-49BC-8270-1A7FD65C4B23}.Debug|x86.ActiveCfg = Debug|Win32
+		{78A10F54-E72D-49BC-8270-1A7FD65C4B23}.Debug|x86.Build.0 = Debug|Win32
+		{78A10F54-E72D-49BC-8270-1A7FD65C4B23}.Release|x64.ActiveCfg = Release|x64
+		{78A10F54-E72D-49BC-8270-1A7FD65C4B23}.Release|x64.Build.0 = Release|x64
+		{78A10F54-E72D-49BC-8270-1A7FD65C4B23}.Release|x86.ActiveCfg = Release|Win32
+		{78A10F54-E72D-49BC-8270-1A7FD65C4B23}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD9F127A-5560-4E84-9A88-3E6766559F88}
+	EndGlobalSection
+EndGlobal
