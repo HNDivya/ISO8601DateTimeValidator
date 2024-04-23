@@ -95,38 +95,44 @@ TEST(ISO8601ValidationTest, InvalidLength) {
     EXPECT_FALSE(ISO8601DateTimeProcessor::isDateTimeValid("2024"));     
 }
 
-TEST(ISO8601ValidationTest, ReadValidDateTimeSetContaining10000Records) {
-    unsigned int expectedRecords = 10000;
-    std::ifstream input_stream("test_inputs\\generated_iso8601_datetime_10000.txt");
-    ASSERT_TRUE(input_stream.is_open()) << "Failed to open generated_iso8601_datetime_10000.txt";
+
+void readAndValidateDateTimeSet(const std::string& input_file, unsigned int expected_records, unsigned int& actual_records, unsigned int& invalid_records) {
+    std::ifstream input_stream(input_file);
+    ASSERT_TRUE(input_stream.is_open()) << "Failed to open " << input_file;
 
     std::string line;
-    unsigned int actualRecords = 0;
+    actual_records = 0;
+    invalid_records = 0;
     while (std::getline(input_stream, line)) {
-        actualRecords++;
-        EXPECT_TRUE(ISO8601DateTimeProcessor::isDateTimeValid(line)) << "Invalid date time format found at line:" << actualRecords;
+        actual_records++;
+        if (!ISO8601DateTimeProcessor::isDateTimeValid(line)) {
+            invalid_records++;
+        }
     }
-   
-    EXPECT_EQ(expectedRecords, actualRecords) << "Failed to parse all 10000 date time strings from file.";
     input_stream.close();
+
+    EXPECT_EQ(expected_records, actual_records) << "Failed to parse all " << expected_records << " date time strings from file: " << input_file;
+}
+
+TEST(ISO8601ValidationTest, ReadValidDateTimeSetContaining10000Records) {
+    unsigned int expected_records = 10000;
+    unsigned int actual_records, invalid_records;
+    readAndValidateDateTimeSet("test_inputs/generated_iso8601_datetime_10000.txt", expected_records, actual_records, invalid_records);
+    EXPECT_EQ(0, invalid_records) << "Invalid date time format found in the file.";
+}
+
+TEST(ISO8601ValidationTest, ReadValidDateTimeSetContaining1000000Records) {
+    unsigned int expected_records = 1000000;
+    unsigned int actual_records, invalid_records;
+    readAndValidateDateTimeSet("test_inputs/generated_iso8601_datetime_1000000.txt", expected_records, actual_records, invalid_records);
+    EXPECT_EQ(0, invalid_records) << "Invalid date time format found in the file.";
 }
 
 TEST(ISO8601ValidationTest, ReadInValidDateTimeSetContaining2901Records) {
-    unsigned int expectedInvalidRecords = 2901;
-    std::ifstream input_stream("test_inputs\\generated_mixed_iso8601_datetime_10000_invalid_2901.txt");
-    ASSERT_TRUE(input_stream.is_open()) << "Failed to open generated_mixed_iso8601_datetime_10000_invalid_2901.txt";
-
-    std::string line;
-    unsigned int actualInvalidRecords = 0;
-    while (std::getline(input_stream, line)) {
-        if (!ISO8601DateTimeProcessor::isDateTimeValid(line))
-        {
-            actualInvalidRecords++;
-        }
-    }
-    
-    EXPECT_EQ(expectedInvalidRecords, actualInvalidRecords) << "Failed to parse all invalid 2901 date time strings from file.";
-    input_stream.close();
+    unsigned int expected_invalid_records = 2901;
+    unsigned int actual_records, invalid_records;
+    readAndValidateDateTimeSet("test_inputs/generated_mixed_iso8601_datetime_10000_invalid_2901.txt", 10000, actual_records, invalid_records);
+    EXPECT_EQ(expected_invalid_records, invalid_records) << "Failed to parse all invalid " << expected_invalid_records << " date time strings from file.";
 }
 
 int main(int argc, char** argv) {
