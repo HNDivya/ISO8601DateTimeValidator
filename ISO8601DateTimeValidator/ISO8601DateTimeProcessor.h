@@ -3,9 +3,6 @@
 #include <iostream>
 #include <fstream>
 #include <regex>
-#include <thread>
-#include <vector>
-#include <mutex>
 #include "../ISO8601DateTimeValidatorLib/isodatetime_validator.h"
 
 class ISO8601DateTimeProcessor
@@ -14,20 +11,13 @@ public:
     static bool processDateTime(const std::string& input_file, const std::string& output_file) {
         std::unordered_set<std::string> unique_datetimes;
 
-        std::mutex mutex; // Mutex for protecting access to unique_datetimes
+        if (!readDateTimeValues(input_file, unique_datetimes)) {
+            return false; // Unable to read input file
+        }
 
-        // Start reading and writing concurrently
-        std::thread read_thread([&]() {
-            readDateTimeValues(input_file, unique_datetimes, mutex);
-            });
-
-        std::thread write_thread([&]() {
-            writeUniqueDateTimeValues(output_file, unique_datetimes, mutex);
-            });
-
-        // Join the threads to wait for them to finish
-        read_thread.join();
-        write_thread.join();
+        if (!writeUniqueDateTimeValues(output_file, unique_datetimes)) {
+            return false; // Unable to write output file
+        }
 
         std::cout << "Unique valid date-time values have been written to " << output_file << std::endl;
         return true;
@@ -38,7 +28,7 @@ public:
         return is_valid_iso8601_datetime(dt_str.c_str());
     }
 private:
-    static bool readDateTimeValues(const std::string& input_file, std::unordered_set<std::string>& unique_datetimes, std::mutex& mutex)
+    static bool readDateTimeValues(const std::string& input_file, std::unordered_set<std::string>& unique_datetimes)
     {
         std::ifstream input_stream(input_file);
         if (!input_stream.is_open()) {
@@ -49,7 +39,6 @@ private:
         std::string line;
         while (std::getline(input_stream, line)) {
             if (isDateTimeValid(line)) {
-                std::lock_guard<std::mutex> lock(mutex); // Lock to protect unique_datetimes
                 if (isDateTimeUnique(line, unique_datetimes))
                 {
                     unique_datetimes.insert(line);
@@ -61,7 +50,7 @@ private:
         return true;
     }
 
-    static bool writeUniqueDateTimeValues(const std::string& output_file, const std::unordered_set<std::string>& unique_datetimes, std::mutex& mutex)
+    static bool writeUniqueDateTimeValues(const std::string& output_file, const std::unordered_set<std::string>& unique_datetimes)
     {
         std::ofstream output_stream(output_file);
         if (!output_stream.is_open()) {

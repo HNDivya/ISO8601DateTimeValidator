@@ -2,6 +2,12 @@
 #include <chrono>
 #include "ISO8601DateTimeProcessor.h"
 
+/* TODO:
+1. Update the C library to support reading a chunk of records from a file.
+   Currently, the datetime format validation reads one record at a time.
+2. Concurrency is optional and may not be necessary for this task.
+3. Implement batch processing with a buffer size of 1024 records.
+*/
 std::string generateOutputFileName() 
 {
     /*  generated_mixed_iso8601_datetime_10000.txt
